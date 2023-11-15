@@ -1,0 +1,492 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : COL_GestionIdentifiants_Push
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x11ac65ac004586fc
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAAA0R8bIQ5GWAuuv/Dp0H4or20g22flktjOGK9yMCTV42rx3ggEu3eSKbyMi3KUOdCyPl9Ycu6U2rL+NUDk7/S0RYpqtAJe9EZXpXHz4L/1PWdKaroNA5dBLJ+R375JqzSko
+  type_code : 31
+  p_codes :
+   -
+     code : |1+
+      
+      // Type de service de Push
+      constant
+      	typeServiceiOSProduction = 1
+      	typeServiceiOSDéveloppement = 2
+      	typeServiceAndroid = 3
+      FIN
+     type : 720896
+  procedures :
+   -
+     name : AjouteIdentifiantIOS
+     internal_properties : CAAAAAgAAACdy3tF+f0RuvzK/dVFLkP1e1twfhc+dEGCqNgx9BK/OCgon2Dzi9tB2YfkTqEHXYlgAxyBAfpkBk5qVD7ueTKgL1JtMKCWdWmcj1Ni07unYjcVpVe1LQNaRf6V8dZhH77tostq0HxaVRmMpcfIm/ajrTFHySSkmQ4DELWeXxT6cxRRxSurTqZM8Hbv4HivVYeWXVZg3o9PB/zz1yLnH1UrnD7AY934iarradJz5je8/JxmNqOEALmnafwxSg==
+     procedure_id : 1273504584052410124
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Ajoute un identifiant (token) du service de notification Apple iOS (APN)
+      // Syntaxe :
+      //[ <Résultat> = ] AjouteIdentifiantIOS (<bufIdentifiant> est buffer, <bProduction> est booléen, <sInfoPerso> est chaîne)
+      //
+      // Paramètres :
+      //	bufIdentifiant (buffer) : token à ajouter
+      //	bProduction (booléen) : vrai si le token est un token pour le serveur de production, faux si il est pour le serveur de développement
+      //	sInfoPerso (chaîne ANSI) : info utilisateur
+      // Valeur de retour :
+      // 	booléen : vrai si l'ajout a été fait, faux sinon
+      //
+      PROCEDURE AjouteIdentifiantIOS(bufIdentifiant est un buffer, bProduction est booleen, sInfoPerso est chaine) : booléen
+      bSucces est booleen
+      si bProduction alors
+      	bSucces = __AjouteIdentifiant(bufIdentifiant,sInfoPerso,typeServiceiOSProduction)
+      sinon
+      	bSucces = __AjouteIdentifiant(bufIdentifiant,sInfoPerso,typeServiceiOSDéveloppement)
+      FIN
+      
+      renvoyer bSucces
+      
+      
+     type : 458752
+   -
+     name : AjouteIdentifiantAndroid
+     internal_properties : CAAAAAgAAAAXZ82aa35zXFbUbnFpkPm3Hu6sSVsGiq5n9rTRfi0DOzl9wPoyrnaWdMdZYl8anFZHBn+OCDwnBXxunhvMz6UIF41ff/QL+h+gBgznz+vDa1V3GcasTSEPUMMhp2rupBlYHEm3bSfOtyVbmUAlft0Upl1/Rqtl2UzlXcfpuBvHHuJK0ss3+qfJz5imVF4ZH7WqBHGSYNXWagXZICTZTY9cLRlFPT3gUmdaHR2jUA0k7Gr+
+     procedure_id : 1273504584052475660
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Ajoute un identifiant (token) du service de notification Android (GCM)
+      // Syntaxe :
+      //[ <Résultat> = ] AjouteIdentifiantAndroid (<bufIdentifiant> est buffer, <sInfoPerso> est chaîne)
+      //
+      // Paramètres :
+      //	bufIdentifiant (buffer) : token à ajouter
+      //	sInfoPerso (chaîne ANSI) : info utilisateur
+      // Valeur de retour :
+      // 	booléen : vrai si l'ajout a été fait, faux sinon
+      //
+      PROCEDURE AjouteIdentifiantAndroid(bufIdentifiant est un buffer, sInfoPerso est chaine) : booléen
+      
+      RENVOYER __AjouteIdentifiant(bufIdentifiant,sInfoPerso,typeServiceAndroid)
+     type : 458752
+   -
+     name : __AjouteIdentifiant
+     internal_properties : CAAAAAgAAAAvEEsFsXjipGErIgwGv+YT8CMKDrPiGoyE5Ak5rD8YCniznKwLGzViIdk0HrZYCaIEPGQgveHea5MpqsllfS8NhqNs9wsQnRlP12r05Tah2wTpIwxruOhye54fmN0iC3GuOnIwyjUwLMF42Rks6o5IoDFW1UbRXccRqtOesWOU/F6G+wwW7DVovxFqZ+HF8OHPJzh8MLovwq5CW0du2ZUCCGUnsDW9jWfoIF+OGIpPbM/HXnzI
+     procedure_id : 1273504584052541196
+     type_code : 15
+     code : |1-
+      
+      // Résumé : Ajoute un identifiant dans la base
+      // Syntaxe :
+      //[ <Résultat> = ] __AjouteIdentifiant (<bufIdentifiant> est buffer, <sInfoPerso> est chaîne, <nTypeService> est entier)
+      //
+      // Paramètres :
+      //	bufIdentifiant (buffer) : L'identifiant
+      //	sInfoPerso (chaîne ANSI) : Une chaine de caractère personnalisée pour l'identifiant
+      //	nTypeService (entier) : Le type du service
+      // 
+      PROCEDURE PRIVEE __AjouteIdentifiant(bufIdentifiant est un buffer, sInfoPerso est une chaîne, nTypeService est entier) : booléen
+      
+      si Taille(bufIdentifiant) = 0 ALORS
+      	renvoyer Faux
+      FIN
+      HLitRecherchePremier(IdentifiantPush,IdentifiantServiceTypeService,[bufIdentifiant, nTypeService])
+      si htrouve(IdentifiantPush) ALORS
+      	// doublon
+      	renvoyer faux
+      FIN
+      
+      IdentifiantPush.IdentifiantService = bufIdentifiant
+      IdentifiantPush.InfoPerso = sInfoPerso
+      IdentifiantPush.TypeService = nTypeService
+      
+      // Ajout dans la base
+      si pas HAjoute(IdentifiantPush) ALORS
+      	ExceptionDéclenche(1,"Echec de l'ajout de l'identifiant")
+      FIN
+      
+      renvoyer vrai
+     type : 458752
+   -
+     name : ListeIdentifiantsIOS
+     procedure_id : 1273504584052606732
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Liste les identifiants iOS
+      // Syntaxe :
+      //[ <Résultat> = ] ListeIdentifiantsIOS (<bProduction> est booléen)
+      //
+      // Paramètres :
+      //	bProduction (booléen) : vrai si le token est un token pour le serveur de production, faux si il est pour le serveur de développement
+      // Valeur de retour :
+      // 	tableau : Liste des identifiants iOS
+      //
+      PROCEDURE ListeIdentifiantsIOS(bProduction est un booléen) : tableau de buffer
+      si bProduction alors
+      	RENVOYER __ListeIdentifiants(typeServiceiOSProduction)
+      sinon
+      	RENVOYER __ListeIdentifiants(typeServiceiOSDéveloppement)	
+      FIN
+      
+      
+      
+     type : 458752
+   -
+     name : ListeIdentifiantsAndroid
+     internal_properties : CAAAAAgAAAARM2631BVWtyskq0lqazkN7lP1bIkljWmxpQ2MkRtuuEC4ubyqH0aksfAorewjNtQKzD+rxC5EN7A5WkoyHoZP0vKLKmuJlz8eeLDOYYiT6hPHM/9qaBz9damznRRUPu92+K3DRwWgsbWrSZBrCNOmjGXXDtM98bCR3+OV2qkxbIQNQ83fWR9sKBRLf6K5Bwzh3imu9IlCdX1EPNp9HaMAJOA=
+     procedure_id : 1273504584052672268
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Liste les identifiants Android
+      // Syntaxe :
+      //[ <Résultat> = ] ListeIdentifiantsAndroid ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	tableau : Liste des identifiants Android
+      //
+      PROCEDURE ListeIdentifiantsAndroid() : tableau de Buffer
+      renvoyer __ListeIdentifiants(typeServiceAndroid)
+     type : 458752
+   -
+     name : __ListeIdentifiants
+     procedure_id : 1273504584052737804
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Liste les identifiants
+      // Syntaxe :
+      //[ <Résultat> = ] __ListeIdentifiants (<nTypeService> est entier)
+      //
+      // Paramètres :
+      //	nTypeService (entier) : Type de service de Push
+      // Valeur de retour :
+      // 	tableau : Liste des identifiants du service
+      //
+      PROCEDURE privee __ListeIdentifiants(nTypeService est entier) : tableau de Buffer
+      
+      // Variables locales
+      tabRetour est un tableau de buffer
+      bufCourant est buffer
+      
+      // Parcours des enregistrements filtrés
+      pour TOUT IdentifiantPush avec TypeService = nTypeService
+      	bufCourant = IdentifiantPush.IdentifiantService
+      	// On ajoute l'identifiant dans le tableau
+      	Ajoute (tabRetour,bufCourant)
+      FIN
+      
+      renvoyer tabRetour
+     type : 458752
+   -
+     name : SupprimeTousIdentifiants
+     procedure_id : 1273504584052803340
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Supprime tous les identifiants
+      //
+      PROCEDURE SupprimeTousIdentifiants()
+      
+      HSupprimeTout(IdentifiantPush)
+     type : 458752
+   -
+     name : __SupprimeIdentifiants
+     procedure_id : 1273504584052868876
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Supprime des identifiants
+      // Syntaxe :
+      //__SupprimeIdentifiants (<tabIdentifiantsASupprimer> est tableau, <nType> est entier)
+      //
+      // Paramètres :
+      //	tabIdentifiantsASupprimer (tableau) : Tableau d'identifiants à supprimer de la base
+      //	nType (entier) : Type d'identifiant
+      //
+      PROCEDURE privee __SupprimeIdentifiants(tabIdentifiantsASupprimer est un tableau de buffer, nType est entier)
+      
+      pour tout bufIdentifiant de tabIdentifiantsASupprimer
+      	HExécuteRequête(REQ_SuppressionIdentifiant,hRequêteDéfaut,bufIdentifiant,nType)
+      FIN
+      
+      
+     type : 458752
+   -
+     name : SupprimeIdentifiantsIOS
+     procedure_id : 1273504584052934412
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Supprime des identifiants iOS
+      // Syntaxe :
+      //SupprimeIdentifiantsIOS (<tabIdentifiantsASupprimer> est tableau, <bProduction> est booléen)
+      //
+      // Paramètres :
+      //	tabIdentifiantsASupprimer (tableau) : Tableau d'identifiants à supprimer de la base
+      //	bProduction (booléen) : vrai si en production
+      //
+      PROCEDURE SupprimeIdentifiantsIOS(tabIdentifiantsASupprimer est un tableau de buffer, bProduction est un booléen)
+      
+      si bProduction ALORS
+      	__SupprimeIdentifiants(tabIdentifiantsASupprimer,typeServiceiOSProduction)
+      sinon
+      	__SupprimeIdentifiants(tabIdentifiantsASupprimer,typeServiceiOSDéveloppement)
+      FIN
+      	
+      
+     type : 458752
+   -
+     name : SupprimeIdentifiantsAndroid
+     internal_properties : CAAAAAgAAAB+UJYkWrVL2dt8sCh/GN8DwGijRvYhN8U9zNrXf9EcUIyxLcpCBcfv+5k/yGU62LIpZNTd23AFk3ac74rdgMhKZ9n18WSRaL1pcvK62Dc7wTNlfFz/DoZmRRb/+BP689kGCLBm5vd+9l8WbxsiHNwY4HvIuzz9ges13l8oY6mWfjswEZ05cFgCDZ7SodheeaxrN/7fVw==
+     procedure_id : 1273504584052999948
+     type_code : 15
+     code : |1+
+      // Résumé : Supprime des identifiants Android
+      // Syntaxe :
+      //SupprimeIdentifiantsAndroid (<tabIdentifiantsASupprimer> est tableau)
+      //
+      // Paramètres :
+      //	tabIdentifiantsASupprimer (tableau) : Tableau d'identifiants à supprimer de la base
+      // Valeur de retour :
+      // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE SupprimeIdentifiantsAndroid(tabIdentifiantsASupprimer est un tableau de buffer)
+      
+      __SupprimeIdentifiants(tabIdentifiantsASupprimer,typeServiceAndroid)
+      
+     type : 458752
+   -
+     name : EnvoieAndroid
+     internal_properties : CAAAAAgAAAAIYL1xMH+39xoVqC53dhvIzxL1S42Zez2khFhUtzfet25eZrZtRlx4xrQViqKfo4mo4YcqvZmR7EvOmsSUtooc55t4PbTV6R2kY/Ux1x/XL9jbNGwYUzxbO5Dr+7A5jegC4Xr6T4IKRXW4Y9ytb4QloJYshTM0Eyjd0mHhPtZKO+Yo2gq7OIVgDqPVAyZCI/YGt8JDDur4nl+23CJNcBIgMvKaNu7r
+     procedure_id : 2251746977001834549
+     type_code : 15
+     code : |1+
+      
+      // Résumé : Envoie une notification PUSH aux abonnés Android
+      //
+      PROCEDURE EnvoieAndroid(sMessage est une chaîne, sContenu est une chaine, sTitre est une chaine, sTexteDeroulant est une chaine, bVibration est un booléen, ...
+      bLED est un booléen, bSupprimable est un booléen, bApplicationActive est un booléen) : chaine
+      
+      // Variables
+      tabIdentifiantsAEnvoyer 		est un tableau de buffers
+      tabIdentifiantsAEnvoyerTemp 	est un tableau de buffers
+      ListeReponse 					est un tableau de Buffer
+      bufIdentifiant					est un buffer
+      tabTokensInvalides 				est un tableau de buffer
+      nNbTokensInvalides				est un entier
+      
+      Si gsCléAPIAndroid = "" ALORS
+      	renvoyer "Veuillez saisie une clé Google API"
+      FIN
+      
+      // On récupère les identifiants
+      ListeReponse = ListeIdentifiantsAndroid()
+      
+      SI ListeReponse..Occurrence > 0 ALORS
+      	// Ajout des identifiants dans un tableau
+      	POUR i = 1 _a_ ListeReponse..Occurrence
+      		bufIdentifiant = ListeReponse[i]
+      		tableauAjoute(tabIdentifiantsAEnvoyer,bufIdentifiant)
+      	FIN
+      	
+      	// On gère le fait que les notifications PUSH ne peuvent avoir au maximum que 1000 destinataires
+      	// S'il y a plus de destinataires il faut envoyer plusieurs messages.
+      	Pour i = 0 _a_ (tabIdentifiantsAEnvoyer..Occurrence / 1000)
+      		nDebut est un entier = i * 1000 + 1
+      		nFin est un entier = (i + 1) * 1000
+      		
+      		Si nFin > tabIdentifiantsAEnvoyer..Occurrence ALORS
+      			nFin = tabIdentifiantsAEnvoyer..Occurrence
+      		FIN
+      		
+      		// On prend les identifiants désirés
+      		TableauCopie(tabIdentifiantsAEnvoyer,tabIdentifiantsAEnvoyerTemp,nDebut,nFin - nDebut + 1)
+      		
+      		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      		// On envoie la notification
+      		
+      		maNotif est un Notification
+      		
+      		maNotif.Message = sMessage
+      		maNotif.Contenu = sContenu
+      		
+      		////////////////////////////////////////////////////////////////
+      		// Android
+      		
+      		// Titre
+      		maNotif.Titre = sTitre
+      		
+      		// Son Android
+      		maNotif.Son = "son_notif.mp3"
+      		
+      		// Icône
+      		maNotif.Icone = "" // mettre ici l'icône pour la notification
+      		
+      		// Groupe des notifications
+      		maNotif..Groupe = "Push"
+      		
+      		// Texte déroulant
+      		maNotif.TexteDéroulant = sTexteDeroulant
+      		
+      		// Options
+      		maNotif.Vibration = bVibration
+      		maNotif.AffichageLED = bLED
+      		maNotif.Supprimable = bSupprimable
+      		maNotif.ActiveApplication = bApplicationActive
+      		
+      		SI PAS NotifPushEnvoie(maNotif,tabIdentifiantsAEnvoyerTemp,gsCléAPIAndroid,tabTokensInvalides,gnTypeNotificationAndroid) ALORS
+      			renvoyer "Erreur lors de l'envoi du message" + rc +  ErreurInfo()
+      		SINON
+      			// On traite les tokens invalides
+      			SI tabTokensInvalides..Occurrence > 0 ALORS
+      				nNbTokensInvalides += tabTokensInvalides..Occurrence
+      				
+      				// On supprime les tokens invalides
+      				SupprimeIdentifiantsAndroid(tabTokensInvalides)	
+      			FIN
+      		FIN
+      	FIN
+      	
+      SINON
+      	renvoyer  "Aucun identifiant stocké sur le serveur." + "Aucune notification envoyée."
+      FIN
+      
+      renvoyer ""
+     type : 458752
+   -
+     name : EnvoieiOS
+     internal_properties : CAAAAAgAAADCg91mS6gWwZJgdYwrkVewQJu2d6KJfWDN7bRw3OlIvWpxsZt7FaUwrex9HYSItr9Y6XVSqhpi5RB2W18qjagjvhQo9csJ9BPsZ60CRt22yxglYFukz1jJ27Ogx4Yd3hVAzZsahSoRVH2O5v0Z
+     procedure_id : 2251746977001900445
+     type_code : 15
+     code : |1-
+      
+      // Résumé : Envoie une notification PUSH aux abonnés iOS
+      //
+      PROCEDURE EnvoieiOS(nTypeEnvoi est un entier, sMessage est une chaine, sContenu est une chaine, sLibelleAction est une chaine, sBadge est une chaine, sTopicID est une chaine) : chaine
+      
+      // Variables
+      tabIdentifiantsAEnvoyer 	est un tableau de buffers
+      tabMoncertif 				est un tableau de Certificat 
+      ListeReponse 				est un tableau de buffer
+      
+      SI gsCertificatiOS = "" ALORS
+      	renvoyer "Veuillez saisir un certificat"
+      fin
+      
+      // On récupère les identifiants
+      ListeReponse = ListeIdentifiantsIOS(Faux)
+      
+      // Chargement du certificat
+      tabMoncertif = CertificatCharge(gsCertificatiOS,gsMotDepasseCertificatiOS)
+      
+      Si tabMoncertif..Occurrence = 0 ALORS
+      	// Problème lors du chargement du certificat
+      	renvoyer "Problème lors du chargement du certificat. Vérifier le chemin et le mot de passe du certificat sur le webservice."
+      FIN
+      
+      SI ListeReponse..Occurrence > 0 ALORS
+      	// Ajout des identifiants dans un tableau
+      	POUR i = 1 _a_ ListeReponse..Occurrence
+      		bufTest est Buffer = ListeReponse[i]
+      		tableauAjoute(tabIdentifiantsAEnvoyer,bufTest)
+      	FIN
+      	
+      	//	nTypeEnvoi = //
+      	//		nTypeEnvoi = typeServiceIOSTest
+      	//	SINON
+      	//		nTypeEnvoi = typeServiceIOSProd
+      	//	FIN
+      	
+      	maNotif est un Notification
+      	
+      	maNotif.Message = sMessage
+      	maNotif.Contenu = sContenu
+      	
+      	////////////////////////////////////////////////////////////////
+      	// iOS
+      	
+      	// Son iOS
+      	maNotif.Son = "son_notif.aac"
+      	
+      	// Icône
+      	maNotif.Icone = "" // mettre ici l'icône pour la notification
+      	
+      	// Titre du bouton d'action
+      	maNotif.LibelléAction = sLibelleAction
+      	
+      	// Badge pour iOS
+      	maNotif.Badge = sBadge
+      	
+      	// On envoie la notification	
+      	SI PAS NotifPushEnvoie(maNotif,tabIdentifiantsAEnvoyer,gsCertificatiOS,gsMotDepasseCertificatiOS,sTopicID,nTypeEnvoi) ALORS
+      		renvoyer ErreurInfo((errComplet))
+      	fin
+      SINON
+      	renvoyer "Aucun identifiant stocké sur le serveur." + RC + "Aucune notification envoyée."
+      fin
+      renvoyer ""
+     type : 458752
+   -
+     name : RécupereTokensInvalidesiOS
+     internal_properties : CAAAAAgAAABJQkZlfVwH/6KDEVxbHrxtIbTU3eyZG90eu4C7Ezr7jgERtoRb2GNXrzOdeK95ReL89wQiwXQ+jycp0T4n+bhlDqzYhzSc/NbNf3HWF9vynhYknanw8mZwouMe4Cmd0EZpZ4NxB2IQ0K0Mpb5kEAl/L44I3YiXdvvY1CoonNZ8EcYbV8Ye3Nwwfos5e26F9LtJu6I5LSOogAZ0ZRZFPRhjNayPpYuyvMn6/gyNsSBg2/rm8602QkIxqsJeO2dg3H1O1g==
+     procedure_id : 2251746977001966356
+     type_code : 15
+     code : |1-
+      
+      // Résumé : Récupère les tokens invalides iOS
+      // Procédure a appeler 1 fois par jour dans une tache planifiée Windows par exemple
+      // 
+      PROCEDURE RécupereTokensInvalidesiOS()
+      
+      // Variables
+      tabTokensInvalides est un tableau de buffers
+      tabTokensInvalidesProd est un tableau de buffers
+      tabMoncertif est un tableau de Certificat
+      
+      // Chargement du certificat
+      tabMoncertif = CertificatCharge(gsCertificatiOS,gsMotDepasseCertificatiOS)
+      
+      // Récupère les tokens
+      tabTokensInvalides = NotifPushListeIdentifiantsInvalides(tabMoncertif[1],typeServiceIOSTest)
+      tabTokensInvalidesProd = NotifPushListeIdentifiantsInvalides(tabMoncertif[1],typeServiceIOSProd)
+      
+      // On traite les tokens invalides
+      SI tabTokensInvalides..Occurrence > 0 ALORS
+      	// On supprime les tokens invalides
+      	SupprimeIdentifiantsiOS(tabTokensInvalides,Faux)	
+      FIN
+      
+      // On traite les tokens invalides
+      SI tabTokensInvalidesProd..Occurrence > 0 ALORS
+      	// On supprime les tokens invalides
+      	SupprimeIdentifiantsiOS(tabTokensInvalidesProd,Vrai)	
+      FIN
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1fad60ce002062e8
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
+associated_test :
+ name : TEST_COL_GestionIdentifiants_Push.wxt
